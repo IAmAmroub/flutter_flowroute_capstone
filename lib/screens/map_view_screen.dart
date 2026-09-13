@@ -13,69 +13,142 @@ class MapViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const startPoint = LatLng(33.5731, -7.5898);
-    const transitPoint = LatLng(33.5800, -7.6000);
-    const bikePoint = LatLng(33.5900, -7.6100);
-    const destinationPoint = LatLng(33.6000, -7.6200);
-    final polylines = <Polyline>{
-      const Polyline(
-        polylineId: PolylineId('walk'),
+    // const startPoint = LatLng(33.5731, -7.5898);
+    // const transitPoint = LatLng(33.5800, -7.6000);
+    // const bikePoint = LatLng(33.5900, -7.6100);
+    // const destinationPoint = LatLng(33.6000, -7.6200);
+    final polylines = route.segments.map((segment) {
+      Color color;
+
+      switch (segment.mode) {
+        case 'walk':
+          color = Colors.green;
+          break;
+
+        case 'transit':
+          color = Colors.blue;
+          break;
+
+        case 'bike':
+          color = Colors.orange;
+          break;
+
+        default:
+          color = Colors.grey;
+      }
+
+      return Polyline(
+        polylineId: PolylineId(segment.mode),
         points: [
-          startPoint,
-          transitPoint,
+          LatLng(
+            segment.startLatitude,
+            segment.startLongitude,
+          ),
+          LatLng(
+            segment.endLatitude,
+            segment.endLongitude,
+          ),
         ],
         width: 6,
-        color: Colors.green,
-      ),
-      const Polyline(
-        polylineId: PolylineId('transit'),
-        points: [
-          transitPoint,
-          bikePoint,
-        ],
-        width: 6,
-        color: Colors.blue,
-      ),
-      const Polyline(
-        polylineId: PolylineId('bike'),
-        points: [
-          bikePoint,
-          destinationPoint,
-        ],
-        width: 6,
-        color: Colors.orange,
-      ),
-    };
+        color: color,
+      );
+    }).toSet();
+
+    final firstSegment = route.segments.first;
+    final lastSegment = route.segments.last;
+
+    final startPoint = LatLng(
+      firstSegment.startLatitude,
+      firstSegment.startLongitude,
+    );
+
+    final destinationPoint = LatLng(
+      lastSegment.endLatitude,
+      lastSegment.endLongitude,
+    );
+
     final markers = <Marker>{
-      const Marker(
-        markerId: MarkerId('start'),
+      Marker(
+        markerId: const MarkerId('start'),
         position: startPoint,
         infoWindow: InfoWindow(
-          title: 'Start',
+          title: route.start,
         ),
       ),
-      const Marker(
-        markerId: MarkerId('transit'),
-        position: transitPoint,
-        infoWindow: InfoWindow(
-          title: 'Transit Stop',
-        ),
-      ),
-      const Marker(
-        markerId: MarkerId('bike'),
-        position: bikePoint,
-        infoWindow: InfoWindow(
-          title: 'Bike Transfer',
-        ),
-      ),
-      const Marker(
-        markerId: MarkerId('destination'),
+      Marker(
+        markerId: const MarkerId('destination'),
         position: destinationPoint,
         infoWindow: InfoWindow(
-          title: 'Destination',
+          title: route.destination,
         ),
       ),
     };
+    // final polylines = route.segments.map((segment) {
+    //   Color color;
+
+    //   switch (segment.mode) {
+    //     case 'walk':
+    //       color = Colors.green;
+    //       break;
+
+    //     case 'transit':
+    //       color = Colors.blue;
+    //       break;
+
+    //     case 'bike':
+    //       color = Colors.orange;
+    //       break;
+
+    //     default:
+    //       color = Colors.grey;
+    //   }
+
+    //   return Polyline(
+    //     polylineId: PolylineId(segment.mode),
+    //     points: [
+    //       LatLng(
+    //         segment.startLatitude,
+    //         segment.startLongitude,
+    //       ),
+    //       LatLng(
+    //         segment.endLatitude,
+    //         segment.endLongitude,
+    //       ),
+    //     ],
+    //     width: 6,
+    //     color: color,
+    //   );
+    // }).toSet();
+    // final markers = <Marker>{
+    //   const Marker(
+    //     markerId: MarkerId('start'),
+    //     position: startPoint,
+    //     infoWindow: InfoWindow(
+    //       title: 'Start',
+    //     ),
+    //   ),
+    //   const Marker(
+    //     markerId: MarkerId('transit'),
+    //     position: transitPoint,
+    //     infoWindow: InfoWindow(
+    //       title: 'Transit Stop',
+    //     ),
+    //   ),
+    //   const Marker(
+    //     markerId: MarkerId('bike'),
+    //     position: bikePoint,
+    //     infoWindow: InfoWindow(
+    //       title: 'Bike Transfer',
+    //     ),
+    //   ),
+    //   const Marker(
+    //     markerId: MarkerId('destination'),
+    //     position: destinationPoint,
+    //     infoWindow: InfoWindow(
+    //       title: 'Destination',
+    //     ),
+    //   ),
+    // };
 
     return Scaffold(
       appBar: AppBar(
@@ -86,7 +159,7 @@ class MapViewScreen extends StatelessWidget {
         children: [
           Expanded(
             child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
+              initialCameraPosition: CameraPosition(
                 target: startPoint,
                 zoom: 13,
               ),
