@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../models/route_model.dart';
+import 'map_view_screen.dart';
 
 class RouteResultScreen extends StatelessWidget {
   final RouteModel route;
@@ -70,6 +71,23 @@ class RouteResultScreen extends StatelessWidget {
                   'Duration: ${segment.duration} min',
                 ),
               )),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                icon: const Icon(Icons.map),
+                label: const Text('View on Map'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MapViewScreen(
+                        route: route,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
