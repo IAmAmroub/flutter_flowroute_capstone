@@ -1,12 +1,15 @@
 import 'package:flowroute_capstone/models/route_model.dart';
 
 class RouteService {
-  Future<RouteModel> fetchRoute() async {
+  Future<RouteModel> fetchRoute({
+    required String start,
+    required String destination,
+  }) async {
     await Future.delayed(const Duration(seconds: 2));
 
     final Map<String, dynamic> mockJson = {
-      'start': 'Home',
-      'destination': 'University',
+      'start': start,
+      'destination': destination,
       'total_distance': 8.5,
       'total_duration': 35,
       'segments': [

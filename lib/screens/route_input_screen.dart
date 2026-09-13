@@ -40,7 +40,8 @@ class _RouteInputScreenState extends State<RouteInputScreen> {
     });
 
     try {
-      final RouteModel route = await _routeService.fetchRoute();
+      final RouteModel route = await _routeService.fetchRoute(
+          start: start, destination: destination);
 
       if (!mounted) return;
 
