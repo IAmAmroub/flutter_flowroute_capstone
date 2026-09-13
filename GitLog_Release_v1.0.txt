@@ -1,0 +1,17 @@
+*   d078a30 (HEAD -> release/v1.0-capstone, origin/release/v1.0-capstone, origin/develop, develop) Merge branch 'feature/google-maps' into develop
+|\  
+| * 62a0525 (feature/google-maps) Improve multi-modal route result UI
+| * f135ae8 Use user locations in simulated route service
+| * 0018032 Add route coordinates to multi-modal data
+| * dec48cf Configure Google Maps and route segment styles
+|/  
+*   d487bfd Merge branch 'feature/multimodal-route-model' into develop
+|\  
+| * cf4f018 (origin/feature/multimodal-route-model, feature/multimodal-route-model) Add settings screen and theme switching
+| * 1ac7094 Add route result screen
+| * fa8f319 Add route input screen
+| * 2b11fcb Add simulated route service
+| * 9945bc1 Add simulated route service
+| * 8c25122 Add multi-modal route models
+|/  
+* 946cbc9 (origin/main, main) Initial Flutter project
