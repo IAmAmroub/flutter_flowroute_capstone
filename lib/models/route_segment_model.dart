@@ -1,16 +1,16 @@
-class RouteSegment {
+class RouteSegmentModel {
   final String mode;
   final double distance;
   final int duration;
 
-  const RouteSegment({
+  const RouteSegmentModel({
     required this.mode,
     required this.distance,
     required this.duration,
   });
 
-  factory RouteSegment.fromJson(Map<String, dynamic> json) {
-    return RouteSegment(
+  factory RouteSegmentModel.fromJson(Map<String, dynamic> json) {
+    return RouteSegmentModel(
       mode: json['mode'] ?? '',
       distance: (json['distance'] ?? 0).toDouble(),
       duration: json['duration'] ?? 0,
