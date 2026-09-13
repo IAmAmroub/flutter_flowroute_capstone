@@ -3,6 +3,7 @@ import 'package:flowroute_capstone/screens/route_result_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../services/route_service.dart';
+import 'settings_screen.dart';
 
 class RouteInputScreen extends StatefulWidget {
   const RouteInputScreen({super.key});
@@ -76,6 +77,17 @@ class _RouteInputScreenState extends State<RouteInputScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("FlowRoute"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.settings))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
