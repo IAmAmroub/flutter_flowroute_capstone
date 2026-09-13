@@ -1,4 +1,5 @@
 import 'package:flowroute_capstone/models/route_model.dart';
+import 'package:flowroute_capstone/screens/route_result_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../services/route_service.dart';
@@ -22,6 +23,8 @@ class _RouteInputScreenState extends State<RouteInputScreen> {
     final start = _startController.text.trim();
     final destination = _destinationController.text.trim();
 
+    FocusScope.of(context).unfocus();
+
     if (start.isEmpty || destination.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -40,11 +43,9 @@ class _RouteInputScreenState extends State<RouteInputScreen> {
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Route loaded: ${route.start} → ${route.destination}',
-          ),
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: ((context) => RouteResultScreen(route: route)),
         ),
       );
     } catch (e) {
